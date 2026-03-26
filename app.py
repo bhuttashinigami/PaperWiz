@@ -313,7 +313,7 @@ def render_card(rank, paper, query, show_attention):
     authors = paper["authors"]
     auth_str = ""
     if authors and authors not in ("nan", ""):
-        auth_str = f"&nbsp;·&nbsp; 👤 {authors[:80]}{'...' if len(authors)>80 else ''}"
+        auth_str = f"&nbsp;·&nbsp; {authors[:80]}{'...' if len(authors)>80 else ''}"
 
     st.markdown(f"""
     <div class="result-card">
@@ -333,7 +333,7 @@ def render_card(rank, paper, query, show_attention):
     preview = paper["abstract"][:400] + ("..." if len(paper["abstract"]) > 400 else "")
     if show_attention:
         st.markdown(f"""
-            <div class="attention-label">🔍 Abstract — green = query-relevant terms</div>
+            <div class="attention-label">Abstract — green = query-relevant terms</div>
             <div class="abstract-text">{attention_html(preview, query)}</div>
         """, unsafe_allow_html=True)
     else:
@@ -347,7 +347,7 @@ def render_card(rank, paper, query, show_attention):
 
 # ── Main ──────────────────────────────────────────────────────────────────
 def main():
-    st.markdown('<div class="main-title">🔬 PaperWiz</div>', unsafe_allow_html=True)
+    st.markdown('<div class="main-title">PaperWiz</div>', unsafe_allow_html=True)
     st.markdown(
         '<div class="subtitle">Hybrid semantic search · 25,000 CS papers · '
         'SciBERT + SPECTER · COM748 Masters Project</div>',
@@ -365,12 +365,12 @@ def main():
 
     # Sidebar
     with st.sidebar:
-        st.markdown("### ⚙️ Settings")
+        st.markdown("### Settings")
         top_k          = st.slider("Results", 5, 20, TOP_K_DEFAULT)
         show_attention = st.toggle("Attention highlighting", value=True)
 
         st.markdown("---")
-        st.markdown("### 📊 Corpus")
+        st.markdown("### Corpus")
         c1, c2 = st.columns(2)
         c1.markdown(f'<div class="metric-box"><div class="metric-val">{len(df):,}</div>'
                     f'<div class="metric-lbl">Papers</div></div>', unsafe_allow_html=True)
@@ -378,7 +378,7 @@ def main():
                     f'<div class="metric-lbl">Device</div></div>', unsafe_allow_html=True)
 
         st.markdown("---")
-        st.markdown("### 🏗️ Architecture")
+        st.markdown("### Architecture")
         st.markdown("""
         **Retrieval:** FAISS IndexFlatIP  
         **Encoder 1:** SciBERT (scientific domain)  
@@ -393,7 +393,7 @@ def main():
         """)
 
         st.markdown("---")
-        st.markdown("### 💡 Try these queries")
+        st.markdown("### Try these queries")
         examples = [
             "transformer attention mechanisms NLP",
             "federated learning differential privacy",
@@ -416,7 +416,7 @@ def main():
         key="query_input",
         label_visibility="collapsed",
     )
-    search_clicked = st.button("🔍 Search")
+    search_clicked = st.button("Search")
 
     if search_clicked and query.strip():
         with st.spinner("Searching..."):
