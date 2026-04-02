@@ -24,98 +24,219 @@ st.set_page_config(
 )
 st.markdown("""
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap');
+
     :root {
-        --primary: #2E7D32;
-        --primary-soft: #E8F5E9;
-        --bg: #f4f6f9;
-        --panel: white;
-        --text: #212121;
-        --muted: #6f7a8a;
-        --border: #d9e1e8;
+        --primary: #00E5FF;
+        --primary-soft: rgba(0, 229, 255, 0.1);
+        --bg: #030509;
+        --panel: rgba(12, 16, 24, 0.6);
+        --text: #e0e7ff;
+        --muted: #8292a8;
+        --border: rgba(0, 229, 255, 0.15);
+        --glow: drop-shadow(0 0 10px rgba(0, 229, 255, 0.4));
     }
+    
+    html, body, [class*="css"] {
+        font-family: 'Space Grotesk', sans-serif !important;
+    }
+    
     .stApp {
-        background: linear-gradient(180deg, #f4f6f9 0%, #eef2f7 100%);
+        background: radial-gradient(circle at top right, #0a1120 0%, #030509 100%);
         color: var(--text);
     }
+    
+    /* Global scrollbar styling for futuristic look */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: rgba(0, 229, 255, 0.3); border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
     .main-title {
-        font-size: 2.4rem; font-weight: 800;
-        color: var(--text); margin-bottom: .1rem;
-        letter-spacing: .4px;
+        font-size: 3rem; 
+        font-weight: 800;
+        color: #fff; 
+        margin-bottom: .2rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-shadow: 0 0 20px rgba(0, 229, 255, 0.6);
     }
+    
     .subtitle {
-        font-size: 1.05rem; color: var(--muted);
-        margin-top: .2rem; margin-bottom: 1.5rem;
+        font-size: 1.1rem; 
+        color: var(--primary);
+        margin-top: .2rem; 
+        margin-bottom: 2rem;
+        font-weight: 300;
+        letter-spacing: 0.5px;
+        opacity: 0.8;
     }
+    
     .result-card {
         background: var(--panel);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
         border: 1px solid var(--border);
-        border-left: 4px solid var(--primary);
+        border-left: 3px solid var(--primary);
         border-radius: 12px;
-        padding: 1rem 1.2rem;
-        margin-bottom: 1rem;
-        box-shadow: 0 4px 24px rgba(33, 43, 54, 0.08);
-        transition: transform .18s ease, box-shadow .18s ease;
+        padding: 1.2rem 1.4rem;
+        margin-bottom: 1.2rem;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        transition: all .25s ease;
     }
+    
     .result-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 28px rgba(33, 43, 54, 0.14);
+        transform: translateY(-3px) scale(1.01);
+        border-color: rgba(0, 229, 255, 0.4);
+        box-shadow: 0 12px 40px rgba(0, 229, 255, 0.15);
+        background: rgba(18, 24, 34, 0.75);
     }
+    
     .paper-title {
-        font-size: 1.1rem; font-weight: 700;
-        color: #111; margin-bottom: .3rem;
+        font-size: 1.25rem; 
+        font-weight: 700;
+        color: #ffffff; 
+        margin-bottom: .4rem;
+        letter-spacing: 0.2px;
     }
-    .paper-meta { font-size: .83rem; color: #727f8f; margin-bottom: .55rem; }
+    
+    .paper-meta { 
+        font-size: .85rem; 
+        color: var(--muted); 
+        margin-bottom: .8rem; 
+        font-weight: 300;
+    }
+    
     .score-badge {
         display: inline-flex;
         align-items: center;
-        gap: .2rem;
-        background: var(--primary-soft); color: var(--primary);
-        border: 1px solid #c8e6c9;
-        border-radius: 999px;
-        padding: 3px 10px; font-size: .78rem;
-        font-weight: 700; margin-right: 6px;
-    }
-    .score-badge-grey {
-        background: #f6f7fb; color: #4d596b; border-color: #dfe7f1;
-    }
-    .abstract-text {
-        font-size: .9rem; color: #2f3d4c;
-        line-height: 1.65; margin-top: .75rem;
-    }
-    .attention-label {
-        font-size: .77rem; color: #546a82;
-        margin-top: .5rem; margin-bottom: .2rem;
-        font-style: italic;
-    }
-    .rank-number {
-        font-size: 1.45rem; font-weight: 800;
+        gap: .3rem;
+        background: var(--primary-soft); 
         color: var(--primary);
-        min-width: 2.1rem;
+        border: 1px solid rgba(0, 229, 255, 0.3);
+        border-radius: 4px;
+        padding: 4px 12px; 
+        font-size: .75rem;
+        font-weight: 600; 
+        margin-right: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: inset 0 0 10px rgba(0, 229, 255, 0.05);
     }
+    
+    .score-badge-grey {
+        background: rgba(255, 255, 255, 0.03); 
+        color: #94a3b8; 
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .abstract-text {
+        font-size: .95rem; 
+        color: #cbd5e1;
+        line-height: 1.7; 
+        margin-top: 1rem;
+        font-weight: 300;
+    }
+    
+    .attention-label {
+        font-size: .75rem; 
+        color: #64748b;
+        margin-top: .8rem; 
+        margin-bottom: .4rem;
+        font-style: italic;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .rank-number {
+        font-size: 1.6rem; 
+        font-weight: 800;
+        color: var(--primary);
+        min-width: 2.5rem;
+        opacity: 0.8;
+        text-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+    }
+    
+    /* Streamlit overrides */
     .stButton > button {
-        background-color: var(--primary) !important;
-        color: #fff !important; border: none !important;
-        border-radius: 8px !important;
-        font-weight: 700 !important;
-        padding: 8px 16px !important;
+        background: transparent !important;
+        color: var(--primary) !important; 
+        border: 1px solid var(--primary) !important;
+        border-radius: 4px !important;
+        font-weight: 600 !important;
+        padding: 10px 20px !important;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all 0.2s ease !important;
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.1) !important;
     }
+    
     .stButton > button:hover {
-        filter: brightness(1.04);
+        background: var(--primary-soft) !important;
+        box-shadow: 0 0 20px rgba(0, 229, 255, 0.3) !important;
+        transform: translateY(-1px);
     }
-    .stSidebar .css-1d391kg {
-        background: linear-gradient(180deg, #ffffff 0%, #f9fbfd 100%);
-        border-radius: 12px;
-        padding: 12px;
+    
+    [data-testid="stSidebar"] {
+        background: #020407 !important;
+        border-right: 1px solid var(--border);
     }
+    
     .metric-box {
-        background: #ffffff; border: 1px solid #e2e8f0;
-        border-radius: 10px; padding: .65rem .9rem; text-align: center;
+        background: rgba(12, 16, 24, 0.4); 
+        border: 1px solid var(--border);
+        border-radius: 8px; 
+        padding: 1rem; 
+        text-align: center;
+        backdrop-filter: blur(10px);
+        transition: border-color .2s ease;
     }
-    .metric-val { font-size: 1.35rem; font-weight: 800; color: var(--primary); }
-    .metric-lbl { font-size: .74rem; color: #6e7a8b; letter-spacing: .3px; }
+    .metric-box:hover {
+        border-color: var(--primary);
+    }
+    
+    .metric-val { 
+        font-size: 1.6rem; 
+        font-weight: 800; 
+        color: var(--primary); 
+        text-shadow: 0 0 10px rgba(0, 229, 255, 0.3);
+    }
+    
+    .metric-lbl { 
+        font-size: .8rem; 
+        color: #94a3b8; 
+        letter-spacing: 1px; 
+        text-transform: uppercase;
+        margin-top: 4px;
+    }
+    
     .streamlit-expanderHeader {
-        color: #2f4256 !important;
-        font-weight: 700 !important;
+        color: var(--primary) !important;
+        font-weight: 600 !important;
+        background: rgba(12, 16, 24, 0.5) !important;
+        border-radius: 4px;
+        padding-left: 10px !important;
+        border: 1px solid transparent;
+        transition: border-color .2s ease;
+    }
+    
+    .streamlit-expanderHeader:hover {
+        border-color: rgba(0, 229, 255, 0.2);
+    }
+    
+    /* Make inputs look futuristic */
+    .stTextInput > div > div > input {
+        background: rgba(12, 16, 24, 0.6) !important;
+        color: #fff !important;
+        border: 1px solid rgba(0, 229, 255, 0.2) !important;
+        border-radius: 4px !important;
+        padding: 15px !important;
+        font-size: 1.1rem !important;
+    }
+    
+    .stTextInput > div > div > input:focus {
+        border-color: var(--primary) !important;
+        box-shadow: 0 0 15px rgba(0, 229, 255, 0.2) !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -293,12 +414,12 @@ def attention_html(abstract: str, query: str) -> str:
     for word, s in zip(words, scores):
         if s > 0.5:
             op = 0.15 + s * 0.45
-            parts.append(f'<span style="background:rgba(46,125,50,{op:.2f});'
-                         f'border-radius:3px;padding:1px 2px">{word}</span>')
+            parts.append(f'<span style="background:rgba(0,229,255,{op:.2f});'
+                         f'color:#fff;border-radius:3px;padding:1px 2px">{word}</span>')
         elif s > 0.15:
             op = s * 0.5
-            parts.append(f'<span style="background:rgba(255,193,7,{op:.2f});'
-                         f'border-radius:3px;padding:1px 2px">{word}</span>')
+            parts.append(f'<span style="background:rgba(0,180,216,{op:.2f});'
+                         f'color:#fff;border-radius:3px;padding:1px 2px">{word}</span>')
         else:
             parts.append(word)
     return " ".join(parts)
@@ -333,7 +454,7 @@ def render_card(rank, paper, query, show_attention):
     preview = paper["abstract"][:400] + ("..." if len(paper["abstract"]) > 400 else "")
     if show_attention:
         st.markdown(f"""
-            <div class="attention-label">Abstract — green = query-relevant terms</div>
+            <div class="attention-label">Abstract — Cyan = query-relevant terms</div>
             <div class="abstract-text">{attention_html(preview, query)}</div>
         """, unsafe_allow_html=True)
     else:
