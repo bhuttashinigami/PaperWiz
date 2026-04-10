@@ -260,7 +260,8 @@ def download_if_needed(filename: str) -> str:
     cached = CACHE_DIR / filename
     if cached.exists():
         return str(cached)
-    st.info(f"Downloading {filename}...")
+    placeholder = st.empty()
+    placeholder.info(f"Downloading {filename}...")
     path = hf_hub_download(
         repo_id=HF_DATASET_REPO,
         filename=filename,
@@ -268,6 +269,7 @@ def download_if_needed(filename: str) -> str:
         token=HF_TOKEN if HF_TOKEN else None,
         local_dir=str(CACHE_DIR),
     )
+    placeholder.empty()
     return path
 
 
@@ -442,7 +444,7 @@ def render_card(rank, paper, query, show_attention):
         <span class="rank-number">#{rank}</span>
         <div style="flex:1;">
           <div class="paper-title">{paper['title']}</div>
-          <div class="paper-meta">📅 {fmt_date(paper['published'])}{auth_str}</div>
+          <div class="paper-meta">{fmt_date(paper['published'])}{auth_str}</div>
           <span class="score-badge">Score {paper['final_score']:.3f}</span>
           <span class="score-badge score-badge-grey">SciBERT {paper['scibert_sim']:.3f}</span>
           <span class="score-badge score-badge-grey">SPECTER {paper['specter_sim']:.3f}</span>
@@ -469,10 +471,10 @@ def render_card(rank, paper, query, show_attention):
 # ── Main ──────────────────────────────────────────────────────────────────
 def main():
     st.markdown('<div class="main-title">PaperWiz</div>', unsafe_allow_html=True)
-    st.markdown(
-        '<div class="subtitle">Hybrid semantic search · 25,000 CS papers · '
-        'SciBERT + SPECTER · COM748 Masters Project</div>',
-        unsafe_allow_html=True)
+    # st.markdown(
+    #     '<div class="subtitle">Hybrid semantic search · 25,000 CS papers · '
+    #     'SciBERT + SPECTER · COM748 Masters Project</div>',
+    #     unsafe_allow_html=True)
 
     with st.spinner("Loading models and search index (first load ~60s)..."):
         try:
